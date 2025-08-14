@@ -1,0 +1,13 @@
+@AbapCatalog.sqlViewName: 'ZV_VBRK_PTOL'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Extensões'
+@Metadata.ignorePropagatedAnnotations: true
+define view ZCDS_PTOLOTTI_08 
+as select from vbrk as pedido
+{
+    key pedido.vbeln as Cod_Pedido,         //Número do documento
+    pedido.vkorg as Org_Venda,              //Organização de vendas
+    pedido.fkdat as Data_Pedido             //Data de cobrança
+}

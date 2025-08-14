@@ -1,0 +1,7 @@
+@AbapCatalog.sqlViewAppendName: 'ZV_BRK_EXT'
+@EndUserText.label: 'Extensão da vbrk'
+extend view ZCDS_PTOLOTTI_08 with ZCDS_PTOLOTTI_08_EXT1
+{
+    gjahr,
+    netwr
+}

@@ -1,0 +1,39 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Associações'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_07 
+
+as select from mara
+
+association to makt as _Descricao on mara.matnr = _Descricao.matnr
+and _Descricao.spras = 'E'
+{
+    key matnr as IdMaterial,
+    ersda as DataCriacao, 
+    mtart as TipoMaterial,
+    matkl as GrupoMaterial,
+    
+    case mtart
+         when 'ROH'     then 'Matéria Prima'
+         when 'FERT'    then 'Produto Acabado'
+         when 'ROH'     then case matkl
+                                  when 'L003'       then    'Produto semiacabado eletrônico'
+                                  when 'GM_HALB'    then    'Produto semiacabado mecânico'
+                                  else 'Produto semiacabado biológico'
+                                  end
+        else 'Outros'
+    end as DescricaoMaterial,
+    
+    $session.client as MandanteAtual,
+    $session.system_date as DataRelatorio,
+    $session.system_language as Idioma,
+    $session.user as Usuario,
+    
+    _Descricao
+} 

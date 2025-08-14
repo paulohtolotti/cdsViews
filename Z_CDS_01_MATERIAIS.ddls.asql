@@ -1,0 +1,11 @@
+@AccessControl.authorizationCheck: #CHECK
+define view entity ZCDS_PTOLOTTI_01 as select from mara
+{
+    key matnr as IDMaterial,
+    ersda as CriadoEm,
+    mtart as TipoMaterial,
+    ernam as Criador,
+    created_at_time as HoraCriacao
+    
+    
+} where mtart = 'HAWA' and ersda like '2023%' and created_at_time between '120000' and '230000'

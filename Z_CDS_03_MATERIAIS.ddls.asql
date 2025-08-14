@@ -1,0 +1,36 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Nested Case'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_03 as select from mara
+{
+    key matnr as CodigoMaterial,
+    ersda as DataCriacao,
+    created_at_time as HoraCriacao,
+    mtart as TipoMaterial,
+    matkl as GrupoMaterial,
+   case mtart
+        when 'ROH'  then 'Matéria prima'
+        when 'FERT' then 'Produto acabado'
+        when 'HALB' then case matkl
+                              when 'L003' then 'Produto semiacabado - Eletrônico'
+                              when 'GM_HALB' then 'Produto semiacabado - Mecânico'
+                              else 'Produto semiacabado'
+                              end
+    end as CategoriaMaterial,
+    
+    mbrsh as IdIndustria,
+ 
+    case mbrsh
+        when 'A' then 'Construção'
+        when 'C' then 'Indústria Química'
+        when 'M' then 'Mecânica'
+        when 'P' then 'Farmacêutica'
+        else 'Outros'
+    end as TipoIndustria
+}

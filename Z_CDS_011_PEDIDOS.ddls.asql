@@ -1,0 +1,24 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Having'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_12 as select from vbak as v
+{
+    key v.vbeln,
+    
+    @Semantics.amount.currencyCode: 'Moeda'
+    v.netwr as ValorLiquido,
+    v.waerk as Moeda,
+    
+    @Semantics.amount.currencyCode: 'Moeda'
+    sum(v.netwr) as TotalVendido,
+    @Semantics.amount.currencyCode: 'Moeda'
+    min(v.netwr) as Minimo
+    
+} group by v.vbeln, v.netwr, v.waerk 
+having v.waerk = 'USD'

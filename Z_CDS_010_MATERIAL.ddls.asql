@@ -1,0 +1,16 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'CDS de agregados'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_11 as select from ekpo as e
+{
+    key e.matnr as Material,    
+    min(cast(e.brtwr as abap.dec(13,2))) as MenorVenda,
+    max(cast(e.brtwr as abap.dec(13,2))) as MaiorVenda
+   
+} group by e.matnr

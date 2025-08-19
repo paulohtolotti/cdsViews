@@ -1,0 +1,15 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Cross Join'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_15 as select from mara
+cross join makt 
+{
+    mara.matnr,
+    makt.maktx
+} where mara.matnr = 'copa%'

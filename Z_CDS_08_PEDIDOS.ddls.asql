@@ -1,0 +1,17 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Cálculos'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_09 as select from ekko as E
+{
+   
+    E.bukrs as ID_EMPRESA,
+    
+    count(*) as TOTAL_PEDIDOS
+    
+} group by E.bukrs

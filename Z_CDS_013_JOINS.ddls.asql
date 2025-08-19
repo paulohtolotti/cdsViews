@@ -1,0 +1,19 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Left Join'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_14 as 
+
+select from mara as m
+inner join makt on makt.matnr = m.matnr and makt.spras = 'E'
+{
+    m.matnr as IdMaterial,
+    m.mtart as TipoMaterial,
+    m.meins as UnidadeMedida,
+    makt.maktx
+}

@@ -1,0 +1,26 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Union'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_16 as 
+
+select from ekko //pedido de compras
+{
+    key ekko.ebeln              as DocNum,           //Número do pedido de compras
+    'COMPRAS'                   as TipoDoc,           //Tipo de Documento fixo
+    ekko.bukrs                  as Empresa,
+    ekko.ekorg                  as OrgCompra
+} 
+union all 
+
+select from vbak {
+    key vbak.vbeln              as DocNum,              //Numero de pedidos de vendas
+    'VENDAS'                    as TipoDoc,
+    vbak.vkorg                  as Empresa,
+    cast('' as abap.char(4))    as OrgCompra
+}

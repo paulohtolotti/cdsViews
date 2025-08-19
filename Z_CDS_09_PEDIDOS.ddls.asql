@@ -1,0 +1,23 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Comando Cast'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_10 
+
+
+as select from vbrk as v
+{
+    key v.vbeln,
+    
+    @Semantics.amount.currencyCode: 'Moeda'
+    cast(v.netwr as abap.dec(15,2)) as ValorLiquido,        //valor liquido
+    cast(v.mwsbk as abap.dec(15,2)) as PercentualImpostos,            //percentual de imposto
+    v.waerk as Moeda,
+ 
+    cast(v.netwr as abap.dec(15,2)) + (cast(v.mwsbk as abap.dec(15, 2)) * cast(v.netwr as abap.dec(15,2))) as ValorComImpostos 
+}

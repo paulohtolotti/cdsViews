@@ -1,0 +1,28 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Inner join'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity ZCDS_PTOLOTTI_13
+ 
+as select from vbap     as v
+inner join vbak         as k on v.vbeln = k.vbeln
+inner join mara         as m on v.matnr = m.matnr
+inner join makt         as t on m.matnr = t.matnr and t.spras = $session.system_language
+
+{
+ key    v.vbeln         as NumDoc,              //Numero do pedido de vendas
+        v.posnr         as ItemPedido,          //Item do pedido           
+        v.meins         as UniMedida,           //Unidade de medida
+        v.matnr         as NumMaterial,         //Numero do Material
+        m.eannr         as DataCriacaoMaterial, 
+        t.maktx         as DocDesc,
+        @Semantics.quantity.unitOfMeasure: 'UniMedida'
+        v.kwmeng        as NumVendas,
+        k.vkorg         as OrgVenda,            //Departamento
+        k.erdat         as DataPedido
+}
